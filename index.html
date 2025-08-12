@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Invoice - Payment Received</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                background: #fff;
+                color: #333;
+                font-size: 14px;
+            }
+
+            /* প্রথমে ডিফল্ট ক্যালেন্ডার আইকন দেখাব */
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                display: inline;
+                cursor: pointer;
+            }
+
+            /* যখন ভ্যালু থাকবে তখন hide হবে */
+            input[type="date"].has-value::-webkit-calendar-picker-indicator {
+                display: none;
+            }
+
+            .invoice-box {
+                padding: 30px;
+                border: 1px solid #eee;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+                border-radius: 6px;
+            }
+
+            .header {
+                text-align: center;
+                padding: 15px 0;
+                border-bottom: 2px solid #2E86C1;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                margin: 0;
+                font-size: 26px;
+                color: #2E86C1;
+            }
+
+            .section-title {
+                font-weight: bold;
+                font-size: 16px;
+                margin-top: 16px;
+                margin-bottom: 8px;
+                color: #2E86C1;
+            }
+
+            input[type="text"],
+            textarea,
+            input[type="email"],
+            input[type="tel"],
+            input[type="number"],
+            input[type="date"] {
+                border: 0px solid #ccc;
+                border-radius: 4px;
+                background: #fff;
+                font-size: 14px;
+                padding: 6px 10px;
+                outline: none;
+                box-sizing: border-box;
+                width: 100%;
+                transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            textarea {
+                resize: none;
+            }
+
+            input[type="text"]:focus,
+            textarea:focus,
+            input[type="email"]:focus,
+            input[type="tel"]:focus,
+            input[type="number"]:focus,
+            input[type="date"]:focus {
+                border-color: #2E86C1;
+                box-shadow: 0 0 5px rgba(46, 134, 193, 0.3);
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 6px;
+            }
+
+            th,
+            td {
+                padding: 4px 12px;
+                text-align: left;
+                vertical-align: middle;
+            }
+
+            th {
+                background: #f4f4f4;
+                font-weight: 600;
+                border: 1px solid #ddd;
+            }
+
+            td {
+                border: 1px solid #ddd;
+            }
+
+            /* Zebra striping ONLY for the table with class .zebra-table */
+            table.zebra-table tbody tr:nth-child(odd) {
+                background-color: #f9f9f9;
+            }
+
+            table.zebra-table tbody tr:nth-child(even) {
+                background-color: #ffffff;
+            }
+
+            table.zebra-table tbody tr:hover {
+                background-color: #d6e9f8;
+            }
+
+            .photo-upload {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .photo-preview {
+                max-width: 120px;
+                max-height: 120px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                object-fit: contain;
+                display: none;
+            }
+
+            .upload-label {
+                padding: 8px 15px;
+                background-color: #2E86C1;
+                color: white;
+                border-radius: 4px;
+                cursor: pointer;
+                user-select: none;
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            /* Hide default file input */
+            #photoInput {
+                display: none;
+            }
+
+            /* For Authorized Signatory section inputs */
+            .signatory-inputs {
+                display: flex;
+                gap: 4px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+            }
+
+            .signatory-inputs>div {
+                flex: 1 1 200px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .signatory-inputs label {
+                font-weight: 600;
+                margin-bottom: 4px;
+                color: #2E86C1;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="invoice-box">
+            <div class="header">
+                <input type="text" placeholder="INVOICE – Payment Received" value="INVOICE – Payment Received"
+                    style="font-weight: bold; font-size: 26px; color: #2E86C1; border: none; background: transparent; text-align: center;" />
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <input type="text" placeholder="Your Company/ Your Name" />
+                <input type="text" placeholder="Your Address" />
+                <input type="text" placeholder="City, State, PIN" />
+                <input type="email" placeholder="Your Email" />
+                <input type="tel" placeholder="Your Phone" />
+            </div>
+
+            <div class="section-title">Invoice Details</div>
+            <table>
+                <tr>
+                    <th>Invoice No</th>
+                    <td><input type="text" placeholder="XPROTO-PH1-2025-001" /></td>
+                    <th>Invoice Date</th>
+                    <td><input type="date" /></td>
+                </tr>
+                <tr>
+                    <th>Payment Date</th>
+                    <td><input type="date" /></td>
+                    <th>Status</th>
+                    <td>
+                        <input type="text" value="Payment Received"
+                            style="font-weight: 800; color: green; border: none; background: transparent; width: 100%;"
+                            readonly />
+                    </td>
+                </tr>
+            </table>
+
+            <div class="section-title">Bill To</div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <input type="text" placeholder="Aprana Technologies Private Limited" />
+                <input type="text" placeholder="Client Address" />
+                <input type="text" placeholder="City, State, PIN" />
+            </div>
+
+            <div class="section-title">Project Details</div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <input type="text" placeholder="Project Name" />
+                <input type="text" placeholder="Phase & Description" />
+            </div>
+
+            <!-- Add class "zebra-table" to this table ONLY -->
+            <table class="zebra-table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount (INR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="Phase 1 Development – Initial modules, setup & structure" />
+                        </td>
+                        <td><input type="number" placeholder="30000" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Phase 1 Development – Initial modules, setup & structure" />
+                        </td>
+                        <td><input type="number" placeholder="30000" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Phase 1 Development – Initial modules, setup & structure" />
+                        </td>
+                        <td><input type="number" placeholder="30000" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Phase 1 Development – Initial modules, setup & structure" />
+                        </td>
+                        <td><input type="number" placeholder="30000" /></td>
+                    </tr>
+                    <!-- You can add more rows here if needed -->
+                    <tr>
+                        <th>Total</th>
+                        <th><input type="number" placeholder="30000" /></th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="section-title">Payment Information</div>
+            <table>
+                <tr>
+                    <th>Payment Method</th>
+                    <td><input type="text" placeholder="Bank Transfer / UPI / Cheque" /></td>
+                    <th>Transaction ID</th>
+                    <td><input type="text" placeholder="Transaction Reference" /></td>
+                </tr>
+                <tr>
+                    <th>Date Received</th>
+                    <td><input type="date" /></td>
+                    <th>Amount Paid</th>
+                    <td><input type="number" placeholder="30000" /></td>
+                </tr>
+            </table>
+
+            <div class="section-title">Bank / UPI Details</div>
+            <table>
+                <tr>
+                    <th>Account Holder</th>
+                    <td><input type="text" placeholder="Account Holder Name" /></td>
+                    <th>Bank Name</th>
+                    <td><input type="text" placeholder="Bank Name" /></td>
+                </tr>
+                <tr>
+                    <th>Account Number</th>
+                    <td><input type="text" placeholder="Account Number" /></td>
+                    <th>IFSC Code</th>
+                    <td><input type="text" placeholder="IFSC Code" /></td>
+                </tr>
+                <tr>
+                    <th>UPI ID</th>
+                    <td colspan="3"><input type="text" placeholder="UPI ID" /></td>
+                </tr>
+            </table>
+
+            <div class="section-title">Remarks</div>
+            <textarea type="text" placeholder="Remarks or notes about the payment"></textarea>
+
+            <div class="section-title">Authorized Signatory</div>
+
+            <div class="signatory-inputs">
+                <input type="text" placeholder="Signatory Name" />
+                <input type="date" placeholder="signDate" id="signDate" />
+            </div>
+
+            <div class="photo-upload">
+                <label for="photoInput" class="upload-label">Signature / Seal (Choose File)</label>
+                <input type="file" id="photoInput" accept="image/*" />
+                <img id="photoPreview" class="photo-preview" alt="Signature Preview" />
+            </div>
+        </div>
+
+        <script>
+            const photoInput = document.getElementById('photoInput');
+            const photoPreview = document.getElementById('photoPreview');
+
+            photoInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const blobURL = URL.createObjectURL(file);
+                    photoPreview.src = blobURL;
+                    photoPreview.style.display = 'block';
+                    // Hide the file input and label to avoid re-upload if desired:
+                    this.style.display = 'none';
+                    this.previousElementSibling.style.display = 'none'; // hides the label
+                }
+            });
+
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+
+            dateInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    if (input.value) {
+                        input.classList.add('has-value');
+                    } else {
+                        input.classList.remove('has-value');
+                    }
+                });
+            });
+
+        </script>
+
+    </body>
+</html>
