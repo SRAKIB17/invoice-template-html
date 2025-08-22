@@ -174,6 +174,28 @@
                 color: #2E86C1;
                 font-size: 14px;
             }
+
+
+
+            #screenshotInput {
+                display: none;
+            }
+
+            .screenshot-preview {
+                max-width: 350px;
+                max-height: 350px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                object-fit: contain;
+                margin: 6px;
+            }
+
+            .preview-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 10px;
+            }
         </style>
     </head>
     <body>
@@ -327,14 +349,22 @@
                 <input type="date" placeholder="signDate" id="signDate" />
             </div>
 
-            <div class="photo-upload">
-                <label for="photoInput" class="upload-label">Signature / Seal (Choose File)</label>
+            <div class="photo-upload"><label for="photoInput" class="upload-label">Signature / Seal (Choose
+                    File)</label>
                 <input type="file" id="photoInput" accept="image/*" />
                 <img id="photoPreview" class="photo-preview" alt="Signature Preview" />
             </div>
+
+            <!-- ✅ Payment Screenshot Upload Section -->
+            <div class="section-title">Payment Screenshots</div>
+            <label for="screenshotInput" class="upload-label">Upload Payment Screenshot(s)</label>
+            <input type="file" id="screenshotInput" accept="image/*" multiple />
+            <div id="screenshotPreviewContainer" class="preview-container"></div>
         </div>
 
         <script>
+
+            //for signature
             const photoInput = document.getElementById("photoInput");
             const photoPreview = document.getElementById("photoPreview");
 
@@ -357,6 +387,22 @@
                     } else {
                         input.classList.remove("has-value");
                     }
+                });
+            });
+
+            //**************************
+            // Multiple Payment Screenshots preview
+            const screenshotInput = document.getElementById("screenshotInput");
+            const screenshotPreviewContainer = document.getElementById("screenshotPreviewContainer");
+
+            screenshotInput.addEventListener("change", function () {
+                screenshotPreviewContainer.innerHTML = ""; // clear old previews
+                Array.from(this.files).forEach(file => {
+                    const blobURL = URL.createObjectURL(file);
+                    const img = document.createElement("img");
+                    img.src = blobURL;
+                    img.classList.add("screenshot-preview");
+                    screenshotPreviewContainer.appendChild(img);
                 });
             });
         </script>
