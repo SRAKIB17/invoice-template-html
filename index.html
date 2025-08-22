@@ -177,7 +177,6 @@
         </style>
     </head>
     <body>
-
         <div class="invoice-box">
             <div class="header">
                 <input type="text" placeholder="INVOICE – Payment Received" value="INVOICE – Payment Received"
@@ -298,11 +297,31 @@
                 </tr>
             </table>
 
+            <!-- ✅ Personal Info Section Added -->
+            <div class="section-title">Personal Information</div>
+            <table>
+                <tr>
+                    <th>PAN No</th>
+                    <td><input type="text" placeholder="ABCDE1234F" /></td>
+                    <th>Aadhaar No</th>
+                    <td><input type="text" placeholder="1234 5678 9012" /></td>
+                </tr>
+                <tr>
+                    <th>Voter ID</th>
+                    <td><input type="text" placeholder="WB/123/456/789" /></td>
+                    <th>Passport No</th>
+                    <td><input type="text" placeholder="N1234567" /></td>
+                </tr>
+                <tr>
+                    <th>GSTIN</th>
+                    <td colspan="3"><input type="text" placeholder="22AAAAA0000A1Z5" /></td>
+                </tr>
+            </table>
+
             <div class="section-title">Remarks</div>
             <textarea type="text" placeholder="Remarks or notes about the payment"></textarea>
 
             <div class="section-title">Authorized Signatory</div>
-
             <div class="signatory-inputs">
                 <input type="text" placeholder="Signatory Name" />
                 <input type="date" placeholder="signDate" id="signDate" />
@@ -316,34 +335,30 @@
         </div>
 
         <script>
-            const photoInput = document.getElementById('photoInput');
-            const photoPreview = document.getElementById('photoPreview');
+            const photoInput = document.getElementById("photoInput");
+            const photoPreview = document.getElementById("photoPreview");
 
-            photoInput.addEventListener('change', function () {
+            photoInput.addEventListener("change", function () {
                 const file = this.files[0];
                 if (file) {
                     const blobURL = URL.createObjectURL(file);
                     photoPreview.src = blobURL;
-                    photoPreview.style.display = 'block';
-                    // Hide the file input and label to avoid re-upload if desired:
-                    this.style.display = 'none';
-                    this.previousElementSibling.style.display = 'none'; // hides the label
+                    photoPreview.style.display = "block";
+                    this.style.display = "none";
+                    this.previousElementSibling.style.display = "none"; // hides the label
                 }
             });
 
             const dateInputs = document.querySelectorAll('input[type="date"]');
-
-            dateInputs.forEach(input => {
-                input.addEventListener('input', () => {
+            dateInputs.forEach((input) => {
+                input.addEventListener("input", () => {
                     if (input.value) {
-                        input.classList.add('has-value');
+                        input.classList.add("has-value");
                     } else {
-                        input.classList.remove('has-value');
+                        input.classList.remove("has-value");
                     }
                 });
             });
-
         </script>
-
     </body>
 </html>
